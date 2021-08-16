@@ -2,13 +2,19 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Container } from '@material-ui/core'
 import './Assets/CSS/App.css'
 import axios from 'axios'
-import Run from './Assets/run.mp3'
+import MusicIcon from './Assets/IMG/music.png'
+
+
 function App() {
   const trackRef = useRef();
   const trackTimeRef = useRef();
   const playIconRef = useRef();
 
   const [audioDisplay, setAudioDisplay] = useState('none')
+  const [noTrackDisplay, setNoTrackDisplay] = useState('flex')
+  const [deleteSearchButton, setDeleteSearchButton] = useState('hidden')
+  const [footerDisplay, setFooterDisplay] = useState('none')
+
   const [searchText, setSearchText] = useState('');
   const [tracks, setTracks] = useState([]);
   const [searchTracks, setSearchTracks] = useState([]);
@@ -26,22 +32,17 @@ function App() {
         }
       };
       
-      axios.request(options).then(function (response) {
-        console.log(response.data.data);
+      axios.request(options).then(function (response){
         response.data.data.length > 0 ? setSearchTracks(response.data.data) : console.log("Empty array");
       }).catch(function (error) {
-        console.error(error);
       });
-      console.log(searchText)
     }
   }, [searchText])
 
   function selectTrack(track){
     setCurrentTrack(track)
     setAudioDisplay('flex')
-    console.clear()
-    console.log(currentTrack)
-    console.log(tracks)
+    setFooterDisplay('block');
   }
   function playTrack(){
     var currentTrack = trackRef.current;
@@ -57,10 +58,6 @@ function App() {
   function nextTrack(track){
     var trackLocation = tracks.indexOf(track);
     var trackLength = tracks.length
-    console.clear()
-    console.log(track);
-    console.log(`Track found at: ${trackLocation}`);
-    console.log(`Number of tracks: ${trackLength}`)
     if(trackLocation === trackLength - 1){
       setCurrentTrack(tracks[0])
     }else{
@@ -71,10 +68,6 @@ function App() {
   function previousTrack(track){
     var trackLocation = tracks.indexOf(track);
     var trackLength = tracks.length
-    console.clear()
-    console.log(track);
-    console.log(`Track found at: ${trackLocation}`);
-    console.log(`Number of tracks: ${trackLength}`)
     if(trackLocation === 0){
       setCurrentTrack(tracks[trackLength - 1])
     }else{
@@ -86,64 +79,74 @@ function App() {
     <>
       <Container maxWidth="lg">
         <div className="search">
-          <input type="text"
-            spellCheck="false"
-            autoComplete="off" className="search-text"
-            onChange={(e) => setSearchText(e.target.value)}
-          />
           <center>
-            {/* <div className="search-results">
-              <div className="search-result">
-                <img src="https://cdns-images.dzcdn.net/images/cover/565b424faee4bdc6e6db39db8d6fc333/500x500-000000-80-0-0.jpg"
-                  className="search-track-image"
-                />
-                <div className="search-track-details">
-                  <span className="search-track-title">
-                    END OF TIME
-                    </span>
-                  <span className="search-track-artist">
-                    Alan Walker, K-391
-                  </span>
-                  <span className="search-track-album">
-                    Any dream will do
-                  </span>
-                </div>
-              </div>
-            </div> */}
+          <div className="search-container">
+            <input type="text"
+              spellCheck="false"
+              value={searchText}
+              autoComplete="off" className="search-text"
+              onChange={(e) => {
+                if(e.target.value.length > 0){
+                  setDeleteSearchButton('visible')
+                  setNoTrackDisplay('none')
+                }else if(e.target.value.length === 0 && audioDisplay === 'none'){
+                  setSearchTracks([])
+                  setNoTrackDisplay('flex')
+                  setDeleteSearchButton('hidden')
+                }
+                setSearchText(e.target.value)
+              }}
+            />
+            <button className="clear-search"
+              style={{visibility: `${deleteSearchButton}`}}
+              onClick={() => {
+                setSearchText('')
+                setSearchTracks([])
+                setDeleteSearchButton('hidden')
+              }}
+            >
+              <i className="far fa-times"></i>
+            </button>
+          </div>
+          </center>
+          <center>
             <div className="search-results">
-
-            {
-              searchTracks.splice(0, 5).map(searchedTrack => {
-                return(
-                  <div className="search-result" key={searchedTrack.id}
-                    onClick={() =>{
-                      selectTrack(searchedTrack);
-                      setTracks(searchTracks);
-                      setTracks(tracks => [...tracks, searchedTrack]);
-                      setSearchTracks([])
-                    }}>
-                    <img src={searchedTrack.album.cover_small} alt="" className="search-track-image" />
-                    <div className="search-track-details">
-                      <span className="search-track-title">
-                        {searchedTrack.title_short}
-                      </span>
-                      <span className="search-track-artist">
-                        {searchedTrack.artist.name}
-                      </span>
-                      <span className="search-track-album">
-                        {searchedTrack.album.title}
-                      </span>
+              {
+                searchTracks.splice(0, 5).map(searchedTrack => {
+                  return(
+                    <div className="search-result" key={searchedTrack.id}
+                      onClick={() =>{
+                        selectTrack(searchedTrack);
+                        setTracks(searchTracks);
+                        setTracks(tracks => [...tracks, searchedTrack]);
+                        setSearchTracks([])
+                      }}>
+                      <img src={searchedTrack.album.cover_small} alt="" className="search-track-image" />
+                      <div className="search-track-details">
+                        <span className="search-track-title">
+                          {searchedTrack.title_short}
+                        </span>
+                        <span className="search-track-artist">
+                          {searchedTrack.artist.name}
+                        </span>
+                        <span className="search-track-album">
+                          {searchedTrack.album.title}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                )
-              })
-            }
+                  )
+                })
+              }
             </div>
           </center>
         </div>
+        <div id="no-track" style={{'display': `${noTrackDisplay}`}}>
+          <img src={MusicIcon} alt="" className="music-icon" />
+          <span className="no-track-text">Start searching for a track!</span>
+        </div>
         <center>
-          <div className="audio-display-container">
-            <div className="audio-display" style={{display: `${audioDisplay}`}}>
+          <div className="audio-display-container" style={{display: `${audioDisplay}`}}>
+            <div className="audio-display">
               <img src={currentTrack.album.cover_big} alt="track_"
                 className="track-image"
               />
@@ -181,8 +184,29 @@ function App() {
                 </span>
               </div>
             </div>
+            <div className="get-track-section">
+              <span className="get-track-action listen-full">
+                Listen to full track&nbsp;<i className="far fa-play-circle"></i>
+              </span>
+              <span className="get-track-action track-info">
+                Track information&nbsp;<i className="far fa-info-circle"></i>
+              </span>
+            </div>
           </div>
         </center>
+        <div className="footer-container" style={{'display': `${footerDisplay}`}}>
+          <center>
+            <div className="footer">
+              <span className="show-playlist"
+                onClick={() => {
+                  
+                }}
+              >
+                Now playing <i className="fas fa-headphones"></i>
+              </span>
+            </div>
+          </center>
+        </div>
       </Container>
     </>
   );

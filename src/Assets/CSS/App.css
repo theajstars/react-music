@@ -1,4 +1,5 @@
 @import url('./fonts.css');
+@import url('./animations.css');
 body{
     background: #1A153A;
     font-family: 'Jost', sans-serif;
@@ -7,8 +8,15 @@ body{
 .search{
     text-align: center;
 }
-.search-text{
+.search-container{
+    display: flex;
+    flex-direction: row;
+    background: rgba(29, 29, 29, 0.7);
     width: 400px;
+    justify-content: center;
+}
+.search-text{
+    width: 360px;
     padding: 9px 20px;
     box-sizing: border-box;
     font-size: 17px;
@@ -18,6 +26,15 @@ body{
     background: rgba(29, 29, 29, 0.7);
     line-height: 23px;
     color: rgba(255, 255, 255, 0.8);
+}
+.clear-search{
+    background-color: transparent;
+    color: #FFFFFF;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 17px;
+    visibility: hidden;
 }
 .search-results{
     z-index: 999;
@@ -73,12 +90,9 @@ body{
 }
 .audio-display-container{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-.audio-display{
-    z-index: -1;
     position: absolute;
     margin-left: -200px;
     left: 50%;
@@ -86,6 +100,9 @@ body{
     margin-top: -200px;
     width: 400px;
     height: 400px;
+}
+.audio-display{
+    z-index: -1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -95,6 +112,7 @@ body{
     background: #1F1A45;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 .track-image{
     width: 185px;
@@ -135,4 +153,101 @@ body{
 }
 .play-track, .pause-track{
     font-size: 38px;
+}
+.get-track-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    box-sizing: border-box;
+}
+.get-track-action{
+    width: 170px;
+    box-shadow: 2px 2px 9px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 23px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.listen-full{
+    background: rgba(255, 255, 255, 0.8);
+    color: #1A153A;
+}
+.track-info{
+    background: rgba(31, 26, 69, 0.8);
+    color: #EAE7FD;
+}
+#no-track{
+    background: #0e0b1f;
+    width: 350px;
+    height: 100px;
+    box-sizing: border-box;
+    /* padding: 30px; */
+    position: absolute;
+    left: 50%;
+    margin-left: -175px;
+    top: 50%;
+    margin-top: -50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    animation-name: noTrackAnimateDiv;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+.music-icon{
+    height: 70px;
+    transition: 0.5s;
+    animation-name: noTrackAnimateIcon;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    opacity: 1;
+}
+.no-track-text{
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 20px;
+}
+.footer-container{
+    display: none;
+    background: #15112F;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 30px;
+    left: 0px;
+}
+.footer{
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    box-sizing: border-box;
+}
+.show-playlist{
+    color: #FFFFFF;
+    background: #100D23;
+    border-radius: 5px;
+    padding: 7px 27px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.show-playlist:hover{
+    background: #0b0918;
 }
