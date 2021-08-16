@@ -41,6 +41,7 @@ function App() {
 
   function selectTrack(track){
     setCurrentTrack(track)
+    playIconRef.current.innerHTML = '<i class="fas fa-play"></i>'
     setAudioDisplay('flex')
     setFooterDisplay('block');
   }
