@@ -20,6 +20,7 @@ body{
     color: rgba(255, 255, 255, 0.8);
 }
 .search-results{
+    z-index: 999;
     width: 400px;
     width: 400px;
     display: flex;
@@ -77,6 +78,7 @@ body{
     align-items: center;
 }
 .audio-display{
+    z-index: -1;
     position: absolute;
     margin-left: -200px;
     left: 50%;
