@@ -1,0 +1,99 @@
+.footer-container{
+    display: none;
+    background: #15112F;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 30px;
+    left: 0px;
+}
+.footer{
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    box-sizing: border-box;
+}
+.show-playlist{
+    color: #FFFFFF;
+    background: #100D23;
+    border-radius: 5px;
+    padding: 7px 27px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.show-playlist:hover{
+    background: #0b0918;
+}
+.now-playing-container{
+    display: none;
+    position: absolute;
+    height: 90vh;
+    bottom: -100vh;
+    z-index: -1;
+    width: 100%;
+    box-sizing: border-box;
+    background: #15112F;
+    left: 0;
+    padding: 30px;
+}
+.now-playing-container-block{
+    display: block;
+    animation-name: nowPlayingAnimate;
+    animation-duration: 0.7s;
+    animation-fill-mode: forwards;
+}
+.now-playing-container-hide{
+    display: block;
+    animation-name: nowPlayingHide;
+    animation-duration: 0.7s;
+    animation-fill-mode: forwards;
+}
+.now-playing-container h2{
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 30px;
+}
+.table-container{
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 75vh;
+}
+table{
+    width: 100%;
+    color: #FFFFFF;
+    box-sizing: border-box;
+    border: none;
+    border-collapse: collapse;
+    z-index: 999;
+}
+
+th{
+    text-align: left;
+    font-size: 20px;
+}
+tr{
+    cursor: pointer;
+    border-bottom: 1px solid rgba(50, 41, 112, 0.12);
+    width: 100%;
+    transition: 0.2s;
+    padding: 10px 0px;
+}
+thead tr{
+    cursor: default;
+}
+tbody tr:hover{
+    background: #1F1A45;
+    font-size: 16px;
+    border-radius: 30px;
+}
+td{
+    width: 30%;
+    padding: 15px 0px;
+    margin: 0px;
+    color: #d3d3d3;
+}
+td, th{
+    padding-left: 10px;
+}

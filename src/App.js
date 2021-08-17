@@ -14,6 +14,8 @@ function App() {
   const [noTrackDisplay, setNoTrackDisplay] = useState('flex')
   const [deleteSearchButton, setDeleteSearchButton] = useState('hidden')
   const [footerDisplay, setFooterDisplay] = useState('none')
+  const [isNowPlayingOpen, setIsNowPlayingOpen] = useState(false)
+  const [nowPlayingDisplay, setNowPlayingDisplay] = useState('none');
 
   const [searchText, setSearchText] = useState('');
   const [tracks, setTracks] = useState([]);
@@ -47,6 +49,7 @@ function App() {
   }
   function playTrack(){
     var currentTrack = trackRef.current;
+    console.log(currentTrack.paused)
     if(!currentTrack.paused){
       currentTrack.pause()
       playIconRef.current.innerHTML = '<i class="fas fa-play"></i>'
@@ -76,6 +79,30 @@ function App() {
     }
     playIconRef.current.innerHTML = '<i class="fas fa-play"></i>'
   }
+
+  function showNowPlaying(){
+    console.clear()
+    console.log(tracks)
+    setIsNowPlayingOpen(!isNowPlayingOpen);
+    setSearchTracks([])
+  }
+  useEffect(() => {
+    if(isNowPlayingOpen === true){
+      setNowPlayingDisplay('block')
+    }else{
+      setTimeout(() => {
+        setNowPlayingDisplay('none');
+      }, 700)
+    }
+  }, [isNowPlayingOpen])
+
+  function listenToFullTrack(){
+    window.open(currentTrack.link)
+  }
+
+  function getTrackInfo(){
+    console.log(currentTrack)
+  }
   return (
     <>
       <Container maxWidth="lg">
@@ -83,6 +110,7 @@ function App() {
           <center>
           <div className="search-container">
             <input type="text"
+              placeholder="Search..."
               spellCheck="false"
               value={searchText}
               autoComplete="off" className="search-text"
@@ -186,10 +214,14 @@ function App() {
               </div>
             </div>
             <div className="get-track-section">
-              <span className="get-track-action listen-full">
+              <span className="get-track-action listen-full"
+                onClick={() => listenToFullTrack()}
+              >
                 Listen to full track&nbsp;<i className="far fa-play-circle"></i>
               </span>
-              <span className="get-track-action track-info">
+              <span className="get-track-action track-info"
+                onClick={() => getTrackInfo()}
+              >
                 Track information&nbsp;<i className="far fa-info-circle"></i>
               </span>
             </div>
@@ -200,13 +232,60 @@ function App() {
             <div className="footer">
               <span className="show-playlist"
                 onClick={() => {
-                  
+                  showNowPlaying()
                 }}
               >
                 Now playing <i className="fas fa-headphones"></i>
               </span>
             </div>
           </center>
+          <div
+            className={`now-playing-container ${isNowPlayingOpen ? "now-playing-container-block" : "now-playing-container-hide"}`} style={{'display': `${nowPlayingDisplay}`}}>
+            <h2>Now Playing</h2>
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>
+                      Title
+                    </th>
+                    <th>
+                      Artist
+                    </th>
+                    <th>
+                      Album
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    tracks.map(track => {
+                      return(
+                        <tr key={track.id}
+                          onClick={() => {
+                            setCurrentTrack(track)
+                            playIconRef.current.innerHTML = '<i class="fas fa-play"></i>'
+                            setCurrentTrack(track)
+                            showNowPlaying()
+                          }}
+                        >
+                          <td>
+                            {track.title_short}
+                          </td>
+                          <td>
+                            {track.artist.name}
+                          </td>
+                          <td>
+                            {track.album.title}
+                          </td>
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </Container>
     </>

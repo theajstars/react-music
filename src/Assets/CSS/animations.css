@@ -21,3 +21,22 @@
 
     }
 }
+@keyframes nowPlayingAnimate{
+    0%{
+        bottom: -100vh;
+    }
+    100%{
+        bottom: 0
+    }
+}
+@keyframes nowPlayingHide{
+    0%{
+        bottom: 0;
+        display: block;
+    }
+    100%{
+        position: absolute;
+        bottom: -100vh;
+        display: none;
+    }
+}
