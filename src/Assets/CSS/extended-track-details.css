@@ -1,0 +1,111 @@
+.track-extended-details-overlay{
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+}
+.track-extended-details-overlay-hide{
+    display: none;
+}
+.track-extended-details-overlay-show{
+    display: block;
+}
+
+.extended-track-details{
+    display: block;
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    box-sizing: border-box;
+    background: #282057;
+    top: 50%;
+    margin-top: -200px;
+    left: 50%;
+    margin-left: -200px;
+}
+.extended-track-head{
+    width: 400px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    background: rgba(27, 25, 25, 0.74);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 27px;
+    line-height: 36px;
+    color: #FFFFFF;
+}
+
+.extended-track-details-content{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 10px 15px;
+    height: 300px;
+
+}
+.extra-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.extended-right-side{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100%;
+}
+.extra-track-details-image{
+    width: 140px;
+    height: 140px;
+    box-shadow: 0px 0px 15px 3px #1c173d;
+}
+
+.song-title{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 23px;
+    line-height: 36px;
+    color: #F0F0F0;
+    margin: 15px 0px;
+}
+
+.song-prop{
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 26px;
+    color: #000000;
+}
+.song-val{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    color: #FEFEFE;
+}
+
+.close-extended{
+    outline: none;
+    border: none;
+    padding: 6px 10px;
+    width: 140px;
+    box-shadow: 0px 0px 15px 3px #1c173d;
+    background-color: #171236;
+    color: #FFFFFF;
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.7px;
+    cursor: pointer;
+    transition: 0.12s;
+}
+.close-extended:hover{
+    background-color: #1a153b;
+    box-shadow: 0px 0px 35px 0px #1c173d;
+}

@@ -9,6 +9,7 @@ function App() {
   const trackRef = useRef();
   const trackTimeRef = useRef();
   const playIconRef = useRef();
+  const nowPlayingButtonRef = useRef()
 
   const [audioDisplay, setAudioDisplay] = useState('none')
   const [noTrackDisplay, setNoTrackDisplay] = useState('flex')
@@ -21,7 +22,11 @@ function App() {
   const [tracks, setTracks] = useState([]);
   const [searchTracks, setSearchTracks] = useState([]);
   const [currentTrack, setCurrentTrack] = useState({artist: '', album: ''});
-  
+
+  const [extendedTrackDetails, setExtendedTrackDetails] = useState({});
+  const [genres, setGenres] = useState([]);
+
+
   useEffect(() => {
     if(searchText.length > 0){
       const options = {
@@ -46,6 +51,7 @@ function App() {
     playIconRef.current.innerHTML = '<i class="fas fa-play"></i>'
     setAudioDisplay('flex')
     setFooterDisplay('block');
+    
   }
   function playTrack(){
     var currentTrack = trackRef.current;
@@ -84,24 +90,24 @@ function App() {
     console.clear()
     console.log(tracks)
     setIsNowPlayingOpen(!isNowPlayingOpen);
+    if(isNowPlayingOpen){
+    }
     setSearchTracks([])
   }
   useEffect(() => {
     if(isNowPlayingOpen === true){
       setNowPlayingDisplay('block')
+      nowPlayingButtonRef.current.innerHTML = ' <i class="far fa-eye-slash"></i> Hide'
     }else{
       setTimeout(() => {
         setNowPlayingDisplay('none');
+        nowPlayingButtonRef.current.innerHTML = 'Now Playing'
       }, 700)
     }
   }, [isNowPlayingOpen])
 
   function listenToFullTrack(){
     window.open(currentTrack.link)
-  }
-
-  function getTrackInfo(){
-    console.log(currentTrack)
   }
   return (
     <>
@@ -219,11 +225,6 @@ function App() {
               >
                 Listen to full track&nbsp;<i className="far fa-play-circle"></i>
               </span>
-              <span className="get-track-action track-info"
-                onClick={() => getTrackInfo()}
-              >
-                Track information&nbsp;<i className="far fa-info-circle"></i>
-              </span>
             </div>
           </div>
         </center>
@@ -231,6 +232,7 @@ function App() {
           <center>
             <div className="footer">
               <span className="show-playlist"
+                ref={nowPlayingButtonRef}
                 onClick={() => {
                   showNowPlaying()
                 }}
@@ -261,7 +263,9 @@ function App() {
                   {
                     tracks.map(track => {
                       return(
-                        <tr key={track.id}
+                        <tr
+                          key={track.id}
+                          className={`${currentTrack.id === track.id ? "now-playing-current" : "now-playing-not-current"}`}
                           onClick={() => {
                             setCurrentTrack(track)
                             playIconRef.current.innerHTML = '<i class="fas fa-play"></i>'
@@ -270,7 +274,7 @@ function App() {
                           }}
                         >
                           <td>
-                            {track.title_short}
+                            {track.title_short}&nbsp;&nbsp;
                           </td>
                           <td>
                             {track.artist.name}

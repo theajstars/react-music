@@ -2,10 +2,12 @@
 @import url('./animations.css');
 @import url('./current-track.css');
 @import url('./now-playing.css');
+@import url('./extended-track-details.css');
 body{
     background: #1A153A;
     font-family: 'Jost', sans-serif;
     margin: 20px 0px;
+    overflow: hidden;
 }
 .search{
     text-align: center;

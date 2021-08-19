@@ -5,7 +5,7 @@
     bottom: 0;
     width: 100%;
     box-sizing: border-box;
-    padding: 20px 30px;
+    padding: 20px 10px;
     left: 0px;
 }
 .footer{
@@ -96,4 +96,11 @@ td{
 }
 td, th{
     padding-left: 10px;
+}
+.now-playing-current{
+    background: #0c091a;
+}
+.now-playing-current td:first-child::after{
+    font-family: "Font Awesome 5 Pro";
+    content: "\f025";
 }
